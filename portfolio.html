@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M. Mathivanan — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #070709;
+  --surface: #0f0f12;
+  --card:    #131318;
+  --border:  rgba(255,255,255,0.06);
+  --ink:     #eeeaf2;
+  --sub:     #9490a0;
+  --dim:     #4a4758;
+  --v:       #a78bfa; /* violet */
+  --v2:      #7c3aed;
+  --g:       #34d399; /* green */
+  --a:       #fb923c; /* amber */
+  --gv: linear-gradient(135deg, #a78bfa, #34d399);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--v2);border-radius:4px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(7,7,9,0.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);padding:16px 0;}
+.ni{max-width:1140px;margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;}
+.nl{font-family:'JetBrains Mono',monospace;font-size:15px;
+  background:var(--gv);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:500;}
+.nm{display:flex;gap:32px;list-style:none;}
+.nm a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sub);
+  text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s;}
+.nm a:hover{color:var(--v);}
+.nav-cta{background:var(--v2);color:#fff;padding:8px 20px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+  text-decoration:none;text-transform:uppercase;transition:all .2s;}
+.nav-cta:hover{background:#6d28d9;transform:translateY(-1px);}
+
+/* ── WRAP ── */
+.w{max-width:1140px;margin:0 auto;padding:0 32px;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden;}
+
+/* Mesh gradient blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.blob1{width:600px;height:600px;top:-100px;right:-150px;
+  background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 70%);}
+.blob2{width:400px;height:400px;bottom:-80px;left:-80px;
+  background:radial-gradient(circle,rgba(52,211,153,0.12),transparent 70%);}
+.blob3{width:300px;height:300px;top:40%;left:40%;
+  background:radial-gradient(circle,rgba(167,139,250,0.07),transparent 70%);}
+
+.hero-layout{display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center;}
+
+/* Left */
+.h-tag{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);
+  color:var(--v);padding:6px 14px;border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:28px;
+  animation:fadeUp .6s ease both;}
+.h-tag span{width:6px;height:6px;background:var(--g);border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(52px,6vw,90px);
+  line-height:1.0;letter-spacing:-2px;margin-bottom:24px;
+  animation:fadeUp .6s ease .1s both;}
+.hero h1 .italic{font-style:italic;background:var(--gv);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.hero-bio{font-size:16px;color:var(--sub);line-height:1.8;margin-bottom:36px;max-width:500px;
+  animation:fadeUp .6s ease .2s both;}
+.hero-bio b{color:var(--ink);font-weight:500;}
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .6s ease .3s both;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;
+  border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .25s;}
+.btn-v{background:linear-gradient(135deg,var(--v2),#5b21b6);color:#fff;}
+.btn-v:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(124,58,237,0.35);}
+.btn-o{background:transparent;color:var(--ink);border:1px solid var(--border);}
+.btn-o:hover{border-color:rgba(167,139,250,0.4);color:var(--v);transform:translateY(-2px);}
+
+/* Right — card panel */
+.hero-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:32px;display:flex;flex-direction:column;gap:20px;
+  animation:fadeUp .6s ease .4s both;}
+
+.metric-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.m-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:20px 18px;position:relative;overflow:hidden;transition:border-color .3s;}
+.m-box:hover{border-color:rgba(167,139,250,0.3);}
+.m-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gv);transform:scaleX(0);transition:transform .3s;}
+.m-box:hover::before{transform:scaleX(1);}
+.m-val{font-family:'Playfair Display',serif;font-size:36px;
+  background:var(--gv);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;margin-bottom:4px;}
+.m-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--dim);
+  letter-spacing:2px;text-transform:uppercase;}
+
+.stack-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.stack-title{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--dim);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.stack-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.sp{background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);
+  color:var(--v);padding:5px 11px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;}
+
+.contact-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;
+  display:flex;flex-direction:column;gap:8px;}
+.cb-row{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sub);}
+.cb-row a{color:var(--sub);text-decoration:none;transition:color .2s;}
+.cb-row a:hover{color:var(--v);}
+.cb-icon{font-size:13px;}
+
+/* ── SECTION COMMONS ── */
+section.sec{padding:100px 0;}
+.s-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--v);
+  letter-spacing:3px;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.s-eyebrow::before{content:'';width:24px;height:1px;background:var(--v);}
+.s-h{font-family:'Playfair Display',serif;font-size:clamp(34px,4vw,54px);
+  letter-spacing:-1.5px;line-height:1.1;margin-bottom:52px;}
+.s-h i{font-style:italic;background:var(--gv);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+hr.sep{border:none;border-top:1px solid var(--border);}
+
+/* ── SKILLS ── */
+.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--border);border-radius:16px;overflow:hidden;}
+.sk-cell{background:var(--card);padding:30px 26px;transition:background .3s;position:relative;}
+.sk-cell:hover{background:#17171e;}
+.sk-cell::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at top left,rgba(167,139,250,0.05),transparent 60%);
+  opacity:0;transition:opacity .3s;}
+.sk-cell:hover::after{opacity:1;}
+.sk-ic{font-size:26px;margin-bottom:16px;display:block;}
+.sk-name{font-size:14px;font-weight:600;margin-bottom:12px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tg{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
+  color:var(--sub);padding:3px 9px;border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;}
+
+/* ── PROJECTS ── */
+.pj-grid{display:flex;flex-direction:column;gap:2px;
+  background:var(--border);border-radius:16px;overflow:hidden;}
+.pj-card{background:var(--card);padding:36px 40px;
+  display:grid;grid-template-columns:1fr auto;gap:40px;
+  align-items:start;transition:background .3s;}
+.pj-card:hover{background:#15151b;}
+
+.pj-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.pj-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:12px;letter-spacing:-.3px;}
+.pj-desc{font-size:14px;color:var(--sub);line-height:1.72;margin-bottom:16px;max-width:580px;}
+.pj-tools{display:flex;flex-wrap:wrap;gap:6px;}
+.pj-t{background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.14);
+  color:rgba(52,211,153,0.75);padding:3px 9px;border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;}
+
+.pj-metric{text-align:right;min-width:100px;}
+.pj-mv{font-family:'Playfair Display',serif;font-size:38px;
+  background:var(--gv);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;display:block;line-height:1;margin-bottom:4px;}
+.pj-ml{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ── EXPERIENCE ── */
+.ex-list{display:flex;flex-direction:column;gap:2px;
+  background:var(--border);border-radius:16px;overflow:hidden;}
+.ex-card{background:var(--card);padding:40px 44px;
+  display:grid;grid-template-columns:200px 1fr;gap:44px;transition:background .3s;}
+.ex-card:hover{background:#15151b;}
+.ex-date{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--v);letter-spacing:1px;margin-bottom:10px;}
+.ex-role{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:6px;line-height:1.2;}
+.ex-co{font-size:13px;color:var(--sub);display:flex;align-items:center;gap:8px;}
+.ex-co::before{content:'';width:12px;height:1px;background:var(--dim);}
+.ex-pts{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.ex-pts li{font-size:14px;color:var(--sub);line-height:1.68;
+  padding-left:18px;position:relative;}
+.ex-pts li::before{content:'▸';position:absolute;left:0;color:var(--v);font-size:10px;top:4px;}
+.ex-pts li b{color:var(--ink);font-weight:500;}
+
+/* ── CERTS ── */
+.ct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--border);border-radius:16px;overflow:hidden;}
+.ct-card{background:var(--card);padding:28px 30px;
+  display:flex;align-items:center;gap:18px;transition:background .3s;}
+.ct-card:hover{background:#17171e;}
+.ct-ic{width:50px;height:50px;flex-shrink:0;border-radius:12px;
+  background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(52,211,153,0.08));
+  border:1px solid rgba(167,139,250,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:22px;}
+.ct-name{font-size:14px;font-weight:600;margin-bottom:4px;}
+.ct-iss{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sub);}
+
+/* ── EDUCATION ── */
+.ed-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;
+  background:var(--border);border-radius:16px;overflow:hidden;}
+.ed-card{background:var(--card);padding:32px 36px;transition:background .3s;}
+.ed-card:hover{background:#17171e;}
+.ed-degree{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px;}
+.ed-uni{font-size:13px;color:var(--sub);margin-bottom:10px;}
+.ed-meta{display:flex;gap:16px;}
+.ed-chip{background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);
+  color:var(--v);padding:4px 10px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;}
+
+/* ── CONTACT ── */
+.contact-sec{padding:120px 0;text-align:center;position:relative;overflow:hidden;}
+.ct-blob{position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(124,58,237,0.06),transparent);
+  pointer-events:none;}
+.ct-tagline{font-size:16px;color:var(--sub);margin:14px 0 48px;line-height:1.6;}
+.ct-cards{display:inline-grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px;width:100%;}
+.ct-lnk{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:18px 22px;display:flex;align-items:center;gap:12px;
+  color:var(--ink);text-decoration:none;
+  font-family:'JetBrains Mono',monospace;font-size:11px;transition:all .25s;letter-spacing:.3px;}
+.ct-lnk:hover{border-color:rgba(167,139,250,0.4);color:var(--v);transform:translateY(-3px);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-layout{grid-template-columns:1fr;gap:48px;}
+  .sk-grid{grid-template-columns:1fr 1fr;}
+  .pj-card{grid-template-columns:1fr;gap:16px;}
+  .pj-metric{text-align:left;}
+  .ex-card{grid-template-columns:1fr;gap:20px;}
+  .ct-grid{grid-template-columns:1fr;}
+  .ed-grid{grid-template-columns:1fr;}
+  .ct-cards{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .w{padding:0 18px;}
+  .sk-grid{grid-template-columns:1fr;}
+  nav .nm{display:none;}
+  .nav-cta{display:none;}
+  .hero{padding-top:80px;}
+  .metric-row{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="ni">
+    <span class="nl">MM — Portfolio</span>
+    <ul class="nm">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:mathivanan8883@gmail.com" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="w">
+    <div class="hero-layout">
+
+      <!-- LEFT -->
+      <div>
+        <div class="h-tag"><span></span> Open to Work · Chennai / Remote</div>
+        <h1>
+          M. <span class="italic">Mathivanan</span><br>
+          Data Analyst
+        </h1>
+        <p class="hero-bio">
+          Results-driven fresher with hands-on expertise in <b>SQL, Python &amp; Power BI</b>.
+          Skilled in <b>end-to-end data pipelines</b> — ETL, EDA, statistical analysis
+          &amp; interactive dashboards. Built predictive models with <b>85%+ accuracy</b>
+          across 100K+ record datasets.
+        </p>
+        <div class="hero-actions">
+          <a href="mailto:mathivanan8883@gmail.com" class="btn btn-v">✉ Hire Me</a>
+          <a href="https://linkedin.com/in/mathivanan18" class="btn btn-o" target="_blank">↗ LinkedIn</a>
+          <a href="https://mathivanan8883.github.io/portfolio" class="btn btn-o" target="_blank">⚡ Live Portfolio</a>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="hero-panel">
+        <div class="metric-row">
+          <div class="m-box">
+            <div class="m-val">100K+</div>
+            <div class="m-lbl">Records Processed</div>
+          </div>
+          <div class="m-box">
+            <div class="m-val">85%+</div>
+            <div class="m-lbl">Model Accuracy</div>
+          </div>
+          <div class="m-box">
+            <div class="m-val">3</div>
+            <div class="m-lbl">Live Projects</div>
+          </div>
+          <div class="m-box">
+            <div class="m-val">3</div>
+            <div class="m-lbl">Certifications</div>
+          </div>
+        </div>
+        <div class="stack-bar">
+          <div class="stack-title">Core Stack</div>
+          <div class="stack-pills">
+            <span class="sp">Python</span>
+            <span class="sp">SQL</span>
+            <span class="sp">Power BI</span>
+            <span class="sp">DAX</span>
+            <span class="sp">Pandas</span>
+            <span class="sp">Scikit-learn</span>
+            <span class="sp">EDA</span>
+            <span class="sp">ETL</span>
+          </div>
+        </div>
+        <div class="contact-bar">
+          <div class="cb-row"><span class="cb-icon">✉</span><a href="mailto:mathivanan8883@gmail.com">mathivanan8883@gmail.com</a></div>
+          <div class="cb-row"><span class="cb-icon">📞</span>+91 88833 07959</div>
+          <div class="cb-row"><span class="cb-icon">🔗</span><a href="https://linkedin.com/in/mathivanan18" target="_blank">linkedin.com/in/mathivanan18</a></div>
+          <div class="cb-row"><span class="cb-icon">🌐</span><a href="https://mathivanan8883.github.io/portfolio" target="_blank">mathivanan8883.github.io/portfolio</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- SKILLS -->
+<section class="sec" id="skills">
+  <div class="w">
+    <div class="reveal">
+      <div class="s-eyebrow">Technical Skills</div>
+      <h2 class="s-h">What I <i>Build With</i></h2>
+    </div>
+    <div class="sk-grid reveal">
+      <div class="sk-cell">
+        <span class="sk-ic">🐍</span>
+        <div class="sk-name">Python</div>
+        <div class="tags"><span class="tg">Pandas</span><span class="tg">NumPy</span><span class="tg">Matplotlib</span><span class="tg">Seaborn</span><span class="tg">Scikit-learn</span></div>
+      </div>
+      <div class="sk-cell">
+        <span class="sk-ic">🗄️</span>
+        <div class="sk-name">SQL / MySQL</div>
+        <div class="tags"><span class="tg">Queries</span><span class="tg">Joins</span><span class="tg">Subqueries</span><span class="tg">Optimization</span><span class="tg">Data Modeling</span></div>
+      </div>
+      <div class="sk-cell">
+        <span class="sk-ic">📊</span>
+        <div class="sk-name">Power BI</div>
+        <div class="tags"><span class="tg">DAX</span><span class="tg">Dashboards</span><span class="tg">KPI Reporting</span><span class="tg">Data Viz</span><span class="tg">Stakeholder Reports</span></div>
+      </div>
+      <div class="sk-cell">
+        <span class="sk-ic">📈</span>
+        <div class="sk-name">Data Analytics</div>
+        <div class="tags"><span class="tg">EDA</span><span class="tg">A/B Testing</span><span class="tg">Hypothesis Testing</span><span class="tg">Regression</span><span class="tg">Forecasting</span></div>
+      </div>
+      <div class="sk-cell">
+        <span class="sk-ic">⚙️</span>
+        <div class="sk-name">ETL & Pipelines</div>
+        <div class="tags"><span class="tg">Extraction</span><span class="tg">Transformation</span><span class="tg">Loading</span><span class="tg">Preprocessing</span><span class="tg">Automation</span></div>
+      </div>
+      <div class="sk-cell">
+        <span class="sk-ic">🛠️</span>
+        <div class="sk-name">Tools & Platforms</div>
+        <div class="tags"><span class="tg">Excel (Adv.)</span><span class="tg">Jupyter</span><span class="tg">Git</span><span class="tg">Google Colab</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- PROJECTS -->
+<section class="sec" id="projects">
+  <div class="w">
+    <div class="reveal">
+      <div class="s-eyebrow">Projects</div>
+      <h2 class="s-h">End-to-End <i>Work</i></h2>
+    </div>
+    <div class="pj-grid reveal">
+
+      <div class="pj-card">
+        <div>
+          <div class="pj-label">EV Policy Analysis</div>
+          <div class="pj-title">Electric Vehicle Adoption &amp; Policy Impact — India</div>
+          <div class="pj-desc">Analyzed 100,000+ records to evaluate EV adoption trends, regional performance, and government policy impact across India. Applied hypothesis testing to identify key growth drivers and regional disparities. Built Power BI dashboards for stakeholder decision-making.</div>
+          <div class="pj-tools"><span class="pj-t">Python</span><span class="pj-t">Pandas</span><span class="pj-t">SQL</span><span class="pj-t">Power BI</span><span class="pj-t">DAX</span><span class="pj-t">Matplotlib</span><span class="pj-t">Statistical Analysis</span></div>
+        </div>
+        <div class="pj-metric">
+          <span class="pj-mv">−25%</span>
+          <span class="pj-ml">Manual Analysis<br>Time Reduced</span>
+        </div>
+      </div>
+
+      <div class="pj-card">
+        <div>
+          <div class="pj-label">E-Commerce Analytics</div>
+          <div class="pj-title">E-Commerce Sales &amp; Performance Analytics</div>
+          <div class="pj-desc">Processed and cleaned 50,000+ transactional records using Excel and Python. Reduced data preparation time by 30% via ETL automation. Built KPI dashboards in Power BI tracking revenue, conversion rates, and customer segments.</div>
+          <div class="pj-tools"><span class="pj-t">Python</span><span class="pj-t">Excel</span><span class="pj-t">Power BI</span><span class="pj-t">DAX</span><span class="pj-t">SQL</span><span class="pj-t">EDA</span><span class="pj-t">KPI Reporting</span></div>
+        </div>
+        <div class="pj-metric">
+          <span class="pj-mv">−30%</span>
+          <span class="pj-ml">Data Prep<br>Time Reduced</span>
+        </div>
+      </div>
+
+      <div class="pj-card">
+        <div>
+          <div class="pj-label">Predictive Modeling</div>
+          <div class="pj-title">Student Performance Predictive Analysis</div>
+          <div class="pj-desc">Developed regression-based predictive models achieving 85%+ accuracy. Performed EDA and feature engineering to identify key academic KPIs and at-risk indicators. Delivered A/B testing insights for data-driven academic intervention strategies.</div>
+          <div class="pj-tools"><span class="pj-t">Python</span><span class="pj-t">Scikit-learn</span><span class="pj-t">Pandas</span><span class="pj-t">SQL</span><span class="pj-t">Regression</span><span class="pj-t">EDA</span><span class="pj-t">A/B Testing</span></div>
+        </div>
+        <div class="pj-metric">
+          <span class="pj-mv">85%+</span>
+          <span class="pj-ml">Model<br>Accuracy</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- EXPERIENCE -->
+<section class="sec" id="experience">
+  <div class="w">
+    <div class="reveal">
+      <div class="s-eyebrow">Experience</div>
+      <h2 class="s-h">Work <i>History</i></h2>
+    </div>
+    <div class="ex-list reveal">
+
+      <div class="ex-card">
+        <div>
+          <div class="ex-date">SEP 2025 — FEB 2026</div>
+          <div class="ex-role">Data Analyst Intern</div>
+          <div class="ex-co">Livewire · Tamil Nadu</div>
+        </div>
+        <ul class="ex-pts">
+          <li>Collected, cleaned, and transformed datasets using Python &amp; SQL; built ETL pipelines <b>improving data accuracy by 20%</b> and reducing preprocessing time.</li>
+          <li>Designed and deployed Power BI dashboards tracking <b>8+ KPIs</b>, enabling data-driven decision-making for business stakeholders.</li>
+          <li>Conducted EDA and statistical analysis on <b>10,000+ records</b> to surface actionable insights for management presentations.</li>
+          <li>Automated recurring Excel and Power BI reports with Python scripts, <b>saving 3+ hours</b> of manual effort per reporting cycle.</li>
+        </ul>
+      </div>
+
+      <div class="ex-card">
+        <div>
+          <div class="ex-date">JAN 2024 — APR 2024</div>
+          <div class="ex-role">Full Stack Development Intern</div>
+          <div class="ex-co">Livewire · Tamil Nadu</div>
+        </div>
+        <ul class="ex-pts">
+          <li>Handled data extraction, preprocessing, and SQL-based querying to support backend data handling and reporting.</li>
+          <li>Optimized SQL queries and designed data models, <b>improving query performance by 15%</b>.</li>
+          <li>Contributed to structured data pipeline development and reporting workflows aligned with business requirements.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- CERTIFICATIONS -->
+<section class="sec">
+  <div class="w">
+    <div class="reveal">
+      <div class="s-eyebrow">Certifications</div>
+      <h2 class="s-h">Credentials &amp; <i>Learning</i></h2>
+    </div>
+    <div class="ct-grid reveal">
+      <div class="ct-card">
+        <div class="ct-ic">🐍</div>
+        <div><div class="ct-name">Google Python Certification</div><div class="ct-iss">Coursera · 2024</div></div>
+      </div>
+      <div class="ct-card">
+        <div class="ct-ic">📊</div>
+        <div><div class="ct-name">Power BI Certification</div><div class="ct-iss">Novitech R&amp;D Pvt Ltd · 2024</div></div>
+      </div>
+      <div class="ct-card">
+        <div class="ct-ic">📈</div>
+        <div><div class="ct-name">Data Analyst Certification</div><div class="ct-iss">INEU Bytes · 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- EDUCATION -->
+<section class="sec">
+  <div class="w">
+    <div class="reveal">
+      <div class="s-eyebrow">Education</div>
+      <h2 class="s-h">Academic <i>Background</i></h2>
+    </div>
+    <div class="ed-grid reveal">
+      <div class="ed-card">
+        <div class="ed-degree">M.Sc. Computer Technology</div>
+        <div class="ed-uni">Erode Arts and Science College, Tamil Nadu</div>
+        <div class="ed-meta">
+          <span class="ed-chip">2024 – 2026 (Pursuing)</span>
+          <span class="ed-chip">CGPA 6.8</span>
+        </div>
+      </div>
+      <div class="ed-card">
+        <div class="ed-degree">B.Sc. Computer Technology</div>
+        <div class="ed-uni">Erode Arts and Science College, Tamil Nadu</div>
+        <div class="ed-meta">
+          <span class="ed-chip">2021 – 2024</span>
+          <span class="ed-chip">CGPA 6.3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contact">
+  <div class="ct-blob"></div>
+  <div class="w" style="position:relative;z-index:1;">
+    <div class="s-eyebrow reveal" style="justify-content:center;">Get In Touch</div>
+    <h2 class="s-h reveal" style="margin-bottom:14px;">Open to <i>Opportunities</i></h2>
+    <p class="ct-tagline reveal">Fresher Data Analyst · Chennai &amp; Remote · Available Immediately</p>
+    <div class="ct-cards reveal">
+      <a href="mailto:mathivanan8883@gmail.com" class="ct-lnk"><span style="font-size:16px">✉</span>mathivanan8883@gmail.com</a>
+      <a href="tel:+918883307959" class="ct-lnk"><span style="font-size:16px">📞</span>+91 88833 07959</a>
+      <a href="https://linkedin.com/in/mathivanan18" class="ct-lnk" target="_blank"><span style="font-size:16px">🔗</span>linkedin/mathivanan18</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="w">© 2026 M. Mathivanan · Data Analyst · Erode, Tamil Nadu · mathivanan8883.github.io/portfolio</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
